@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+/* Card theme variables */
+@layer base {
+  :root {
+    --card-red: 0 72% 50%;
+    --card-black: 0 0% 10%;
+    --card-cream: 45 60% 95%;
+    --felt-green-1: #0b6b3a;
+    --felt-green-2: #085c31;
+    --felt-green-3: #064b28;
+    --felt-green-4: #043821;
+  }
+}
+
+/* Card-themed helpers */
+@layer components {
+  .card-font {
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  .card-table-bg {
+    /* Felt table gradient */
+    background: radial-gradient(circle at 30% 20%, var(--felt-green-1) 0%, var(--felt-green-2) 35%, var(--felt-green-3) 65%, var(--felt-green-4) 100%);
+    background-attachment: fixed;
+  }
+
+  .card-panel {
+    background-color: hsl(var(--card-cream));
+    border: 1px solid #e5dcc7;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 0 #c9b99b, 0 6px 12px rgba(0,0,0,0.15);
+  }
+
+  .card-outline {
+    border: 1px solid #d8caae;
+    border-radius: 0.5rem;
+  }
+
+  /* Responsive playing card sizing */
+  .playing-card {
+    --card-width: clamp(48px, 10vw, 96px);
+    width: var(--card-width);
+    height: calc(var(--card-width) * 1.5);
+  }
+  .playing-card-sm {
+    --card-width: clamp(36px, 8vw, 72px);
+  }
+  .playing-card-lg {
+    --card-width: clamp(64px, 12vw, 128px);
+  }
+  .playing-card-symbol {
+    font-size: clamp(16px, 3.5vw, 24px);
+  }
+}

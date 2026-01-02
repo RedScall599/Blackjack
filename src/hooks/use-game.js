@@ -1,0 +1,117 @@
+// Blackjack game hook (client)
+'use client'
+
+import { useMemo, useState } from 'react'
+
+function buildDeck() {
+  const suits = ['♠', '♥', '♦', '♣']
+  const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+  const deck = []
+  for (const s of suits) {
+    for (const r of ranks) {
+      deck.push({ rank: r, suit: s })
+    }
+  }
+  return deck
+}
+
+function shuffle(array) {
+  const a = array.slice()
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+function cardValue(rank) {
+  if (rank === 'A') return 11
+  if (['K', 'Q', 'J'].includes(rank)) return 10
+  return Number(rank)
+}
+
+function handTotals(hand) {
+  // Ace can be 1 or 11
+  let total = 0
+  let aces = 0
+  for (const c of hand) {
+    total += cardValue(c.rank)
+    if (c.rank === 'A') aces += 1
+  }
+  while (total > 21 && aces > 0) {
+    total -= 10
+    aces -= 1
+  }
+  return total
+}
+
+export function useGame() {
+  const [deck, setDeck] = useState(() => shuffle(buildDeck()))
+  const [player, setPlayer] = useState([])
+  const [dealer, setDealer] = useState([])
+  const [bet, setBet] = useState(10)
+  const [result, setResult] = useState(null) // 'win' | 'lose' | 'push'
+  const playerTotal = useMemo(() => handTotals(player), [player])
+  const dealerTotal = useMemo(() => handTotals(dealer), [dealer])
+
+  function deal() {
+    const d = deck.slice()
+    const p = [d.pop(), d.pop()]
+    const dl = [d.pop(), d.pop()]
+    setDeck(d)
+    setPlayer(p)
+    setDealer(dl)
+    setResult(null)
+  }
+
+  function hit() {
+    if (result) return
+    const d = deck.slice()
+    const p = player.concat(d.pop())
+    setDeck(d)
+    setPlayer(p)
+    if (handTotals(p) > 21) {
+      setResult('lose')
+    }
+  }
+
+  function stand() {
+    if (result) return
+    // Dealer hits until 17
+    let d = deck.slice()
+    let dl = dealer.slice()
+    while (handTotals(dl) < 17 && d.length) {
+      dl = dl.concat(d.pop())
+    }
+    setDeck(d)
+    setDealer(dl)
+    const pt = handTotals(player)
+    const dt = handTotals(dl)
+    if (dt > 21) setResult('win')
+    else if (pt > dt) setResult('win')
+    else if (pt < dt) setResult('lose')
+    else setResult('push')
+  }
+
+  function resetDeck() {
+    setDeck(shuffle(buildDeck()))
+    setPlayer([])
+    setDealer([])
+    setResult(null)
+  }
+
+  return {
+    deck,
+    player,
+    dealer,
+    playerTotal,
+    dealerTotal,
+    bet,
+    setBet,
+    result,
+    deal,
+    hit,
+    stand,
+    resetDeck
+  }
+}

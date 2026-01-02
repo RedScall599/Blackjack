@@ -1,0 +1,53 @@
+import './globals.css'
+import Link from 'next/link'
+import { getSessionUser } from '@/lib/session'
+
+export const metadata = {
+  title: 'Blackjack Royale',
+  description: 'Web-based Blackjack with real persistence and learning',
+}
+
+export default async function RootLayout({ children }) {
+  const user = await getSessionUser()
+  return (
+    <html lang="en" className="card-font">
+      <body className="min-h-screen card-table-bg">
+        <header className="border-b bg-white/80 backdrop-blur card-outline">
+          <div className="max-w-full md:max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-3 flex items-center gap-2 sm:gap-4 flex-wrap">
+            <Link href="/" className="font-semibold">Blackjack Royale</Link>
+            <nav className="flex gap-2 sm:gap-3 text-sm flex-wrap">
+              {user && <Link href="/home" className="underline">Home</Link>}
+              {user && <Link href="/product" className="underline">Play</Link>}
+              {user && <Link href="/earn" className="underline">Earn Coins</Link>}
+              <Link href="/about" className="underline">About</Link>
+              <Link href="/why" className="underline">Why</Link>
+              <Link href="/features" className="underline">Features</Link>
+              {user?.role === 'ADMIN' && <Link href="/rubric-evidence" className="underline">Evidence</Link>}
+              {user?.role === 'ADMIN' && <Link href="/reflection" className="underline">Reflection</Link>}
+            </nav>
+            <div className="ml-auto text-sm flex items-center gap-3">
+              {user ? (
+                <>
+                  <span className="text-gray-700">{user.email}</span>
+                  <form action="/api/auth/logout" method="post">
+                    <button type="submit" className="underline">Logout</button>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="underline">Login</Link>
+                  <Link href="/register" className="underline">Register</Link>
+                </>
+              )}
+            </div>
+          </div>
+        </header>
+        <main className="max-w-full md:max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-8">
+          <div className="card-panel p-6">
+            {children}
+          </div>
+        </main>
+      </body>
+    </html>
+  )
+}
