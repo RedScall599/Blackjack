@@ -2,11 +2,13 @@
 import { useEffect, useState } from 'react'
 import { useGame } from '@/hooks/use-game'
 import PlayingCard from '@/components/game/PlayingCard'
+import CoinRain from '@/components/ui/CoinRain'
 
 export default function BlackjackTable({ initialCoins }) {
   const { player, dealer, playerTotal, dealerTotal, bet, setBet, result, deal, hit, stand, resetDeck } = useGame()
   const [coins, setCoins] = useState(initialCoins ?? 100)
   const [message, setMessage] = useState('')
+  const [showCoins, setShowCoins] = useState(false)
   const canPlay = coins > 0 && bet > 0 && bet <= coins
 
   async function persistResult(finalResult) {
@@ -60,6 +62,15 @@ export default function BlackjackTable({ initialCoins }) {
     }
   }, [result])
 
+  // Trigger coin rain on win
+  useEffect(() => {
+    if (result === 'win') {
+      setShowCoins(true)
+      const t = setTimeout(() => setShowCoins(false), 2500)
+      return () => clearTimeout(t)
+    }
+  }, [result])
+
   // Auto-resolve when player hits exactly 21: stand immediately
   useEffect(() => {
     if (!result && player.length && playerTotal === 21) {
@@ -69,6 +80,7 @@ export default function BlackjackTable({ initialCoins }) {
 
   return (
     <div className="space-y-4">
+      {showCoins && <CoinRain count={28} durationMs={2600} />}
       {/* Top result banner */}
       <div className="min-h-[44px]">
         {result && (
@@ -87,7 +99,20 @@ export default function BlackjackTable({ initialCoins }) {
         )}
       </div>
       <div className="flex items-center gap-2 flex-wrap">
-        <span>Coins:</span>
+        <span className="inline-flex items-center gap-1">
+          {/* Coin icon */}
+          <svg aria-hidden="true" focusable="false" className="w-4 h-4" viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="coinGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#FFD700" />
+                <stop offset="100%" stopColor="#E6B800" />
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10" fill="url(#coinGrad)" stroke="#C9A200" strokeWidth="1.5" />
+            <circle cx="12" cy="12" r="6.5" fill="none" stroke="#F7D24A" strokeWidth="1" />
+          </svg>
+          Coins:
+        </span>
         <strong>{coins}</strong>
         <span>Bet:</span>
         <input

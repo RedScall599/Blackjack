@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+// Use app-wide red nav button style
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -40,10 +40,10 @@ export default function LoginPage() {
   }
 
   return (
-    <Card>
+    <Card className="auth-panel">
       <CardHeader>
         <CardTitle>Sign In</CardTitle>
-        <CardDescription>Sign in to play Blackjack Royale.</CardDescription>
+        <CardDescription className="text-black">Sign in to play Blackjack Royale.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="text-sm text-gray-600 mb-3">
@@ -54,13 +54,13 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <label className="block text-sm mb-1">Email</label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <Input className="bg-white text-black" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div>
             <label className="block text-sm mb-1">Password</label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <Input className="bg-white text-black" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <Button type="submit" disabled={loading}>{loading ? 'Signing in...' : 'Sign In'}</Button>
+          <button type="submit" className="nav-btn w-full" disabled={loading}>{loading ? 'Signing in...' : 'Sign In'}</button>
         </form>
 
         <div className="mt-6 text-center">

@@ -88,6 +88,15 @@
     --success: 142 76% 36%;
     --warning: 38 92% 50%;
     --danger: 0 72% 51%;
+
+    /* Blackjack suit + checker theme */
+    --suit-red: 0 72% 55%;
+    --suit-black: 0 0% 8%;
+    --checker-red: 0 72% 40%;
+    --checker-black: 0 0% 16%;
+    --glow-green: 142 76% 36%;
+    --glow-red: 0 72% 51%;
+    --glow-gold: 45 100% 55%;
   }
 }
 
@@ -104,7 +113,6 @@
     font-family: Georgia, "Times New Roman", serif;
     font-weight: 700;
   }
-
   /* Premium casino table background */
   .card-table-bg {
     background: radial-gradient(
@@ -135,14 +143,27 @@
 
   /* Clean, modern panels */
   .card-panel {
-    background: linear-gradient(145deg, rgba(226, 220, 206, 0.95), rgba(210, 200, 182, 0.92));
-    border: 2px solid rgba(180, 165, 140, 0.4);
+    background: linear-gradient(145deg, hsl(var(--felt-primary) / 0.95), hsl(var(--felt-dark) / 0.95));
+    border: 2px solid hsl(var(--gold) / 0.35);
     border-radius: 1rem;
     box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.15),
-      0 10px 25px -3px rgba(0, 0, 0, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-    backdrop-filter: blur(10px);
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 10px 25px -3px rgba(0, 0, 0, 0.15),
+      inset 0 0 0 1px hsl(var(--gold) / 0.12),
+      0 0 18px hsl(var(--gold) / 0.10);
+    color: #000000;
+  }
+  
+  /* Neutral auth panel (non-green) for sign-in/up */
+  .auth-panel {
+    background: linear-gradient(145deg, hsl(45 30% 97% / 0.98), hsl(45 25% 92% / 0.98));
+    border: 2px solid hsl(var(--gold) / 0.22);
+    border-radius: 1rem;
+    box-shadow:
+      0 4px 10px rgba(0, 0, 0, 0.15),
+      0 12px 28px rgba(0, 0, 0, 0.12),
+      inset 0 0 0 1px hsl(var(--gold) / 0.10);
+    color: #000000;
   }
   
   /* Gold accent panel for premium areas */
@@ -163,8 +184,10 @@
   }
   
   .card-outline:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 0 12px rgba(255, 255, 255, 0.25),
+      0 0 32px rgba(255, 215, 0, 0.2);
   }
 
   /* Responsive playing cards with modern proportions */
@@ -238,6 +261,38 @@
   }
 
   /* Button styles */
+  .nav-btn {
+    background: hsl(var(--suit-red));
+    color: #fff;
+    font-weight: 700;
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--suit-red) / 0.6);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.25),
+      0 0 8px hsl(var(--glow-red) / 0.45);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 4px 10px rgba(0, 0, 0, 0.3),
+      0 0 12px hsl(var(--glow-red) / 0.6),
+      0 0 22px hsl(var(--glow-red) / 0.4);
+    filter: saturate(1.1);
+  }
+
+  .nav-btn:active {
+    transform: translateY(0);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.35),
+      0 0 8px hsl(var(--glow-red) / 0.5);
+  }
   .btn-primary {
     background: linear-gradient(145deg, hsl(var(--gold)), hsl(var(--gold-dark)));
     color: hsl(var(--card-black));
@@ -259,7 +314,9 @@
     transform: translateY(-2px);
     box-shadow: 
       0 4px 8px rgba(0, 0, 0, 0.25),
-      0 8px 20px rgba(0, 0, 0, 0.2);
+      0 8px 20px rgba(0, 0, 0, 0.2),
+      0 0 10px hsl(var(--gold) / 0.55),
+      0 0 24px hsl(var(--gold) / 0.35);
   }
   
   .btn-primary:active {
@@ -284,6 +341,9 @@
     background: rgba(255, 255, 255, 0.25);
     border-color: rgba(255, 255, 255, 0.5);
     transform: translateY(-2px);
+    box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.35),
+      0 0 24px rgba(255, 255, 255, 0.25);
   }
 
   /* Score display */
@@ -353,6 +413,92 @@
   }
 }
 
+/* Coin rain animation */
+@layer components {
+  @keyframes coin-fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(540deg); opacity: 0.95; }
+  }
+
+  .coin-rain { overflow: hidden; }
+
+  .coin-rain__coin {
+    position: absolute;
+    top: -10vh;
+    width: var(--coin-size, 20px);
+    height: var(--coin-size, 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff6bf 5%, #ffd84d 35%, #e6b800 70%, #c9a200 100%);
+    box-shadow:
+      0 0 8px rgba(255, 216, 77, 0.6),
+      inset 0 0 4px rgba(255, 255, 255, 0.5);
+    border: 1px solid #c9a200;
+    animation-name: coin-fall;
+    animation-duration: var(--coin-duration, 3000ms);
+    animation-delay: var(--coin-delay, 0ms);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: forwards;
+  }
+}
+
+/* Casino checkerboard backgrounds */
+@layer components {
+  .casino-checkers {
+    background:
+      conic-gradient(from 45deg,
+        hsl(var(--checker-red)) 0 90deg,
+        hsl(var(--checker-black)) 0 180deg,
+        hsl(var(--checker-red)) 0 270deg,
+        hsl(var(--checker-black)) 0 360deg);
+    background-size: 24px 24px;
+  }
+
+  .casino-checkers-soft {
+    position: relative;
+  }
+
+  .casino-checkers-soft::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      conic-gradient(from 45deg,
+        hsl(var(--checker-red)) 0 90deg,
+        hsl(var(--checker-black)) 0 180deg,
+        hsl(var(--checker-red)) 0 270deg,
+        hsl(var(--checker-black)) 0 360deg);
+    background-size: 20px 20px;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  /* Suit color utilities */
+  .suit-red { color: hsl(var(--suit-red)); }
+  .suit-black { color: hsl(var(--suit-black)); }
+
+  /* Generic glow utilities */
+  .glow-green { box-shadow: 0 0 8px hsl(var(--glow-green) / 0.6), 0 0 20px hsl(var(--glow-green) / 0.3); }
+  .glow-red { box-shadow: 0 0 8px hsl(var(--glow-red) / 0.6), 0 0 20px hsl(var(--glow-red) / 0.3); }
+  .glow-gold { box-shadow: 0 0 8px hsl(var(--gold) / 0.6), 0 0 20px hsl(var(--gold) / 0.3); }
+
+  /* Button hover glow for default <button> elements inside panels */
+  .card-panel button,
+  .auth-panel button {
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .card-panel button:hover,
+  .auth-panel button:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.2),
+      0 0 10px rgba(255, 255, 255, 0.45),
+      0 0 22px rgba(255, 255, 255, 0.3);
+  }
+}
+
 /* Responsive adjustments for all screen sizes */
 @layer components {
   /* Container utilities */
@@ -374,17 +520,23 @@
   }
   
   .card-hand {
-    display: flex;
-    flex-wrap: wrap;
+    /* Blackjack-friendly ivory with subtle gold tint */
+    background: linear-gradient(145deg, hsl(45 30% 96% / 0.98), hsl(45 40% 92% / 0.95));
+    border: 2px solid hsl(var(--gold) / 0.25);
     gap: clamp(0.5rem, 1.5vw, 1rem);
     justify-content: center;
     align-items: center;
+    box-shadow:
+      inset 0 0 0 1px hsl(var(--gold) / 0.12),
+      0 0 18px hsl(var(--gold) / 0.10);
   }
+
 }
 
 /* Mobile first responsive styles */
 @media (max-width: 640px) {
-  .card-panel {
+  .card-panel,
+  .auth-panel {
     border-radius: 0.75rem;
     padding: clamp(0.75rem, 3vw, 1rem);
     margin: 0.5rem;
@@ -413,7 +565,8 @@
 
 /* Tablet styles */
 @media (min-width: 641px) and (max-width: 1024px) {
-  .card-panel {
+  .card-panel,
+  .auth-panel {
     padding: clamp(1rem, 2.5vw, 1.5rem);
   }
   
@@ -426,7 +579,8 @@
 
 /* Large screen styles */
 @media (min-width: 1025px) {
-  .card-panel {
+  .card-panel,
+  .auth-panel {
     padding: 2rem;
   }
   
@@ -448,7 +602,8 @@
     height: clamp(35px, 7vw, 50px);
   }
   
-  .card-panel {
+  .card-panel,
+  .auth-panel {
     margin: 0.25rem;
   }
 }
