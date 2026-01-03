@@ -2,9 +2,9 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 40 20% 88%;
     --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    --card: 40 20% 88%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
@@ -55,59 +55,430 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  
+  /* Main page background with beige tone */
+  html, body {
+    background: linear-gradient(145deg, rgb(226, 220, 206), rgb(210, 200, 182));
+    min-height: 100vh;
   }
 }
 
-/* Card theme variables */
+/* Enhanced blackjack theme variables */
 @layer base {
   :root {
-    --card-red: 0 72% 50%;
+    /* Card colors */
+    --card-red: 220 13% 18%;
     --card-black: 0 0% 10%;
-    --card-cream: 45 60% 95%;
-    --felt-green-1: #0b6b3a;
-    --felt-green-2: #085c31;
-    --felt-green-3: #064b28;
-    --felt-green-4: #043821;
+    --card-bg: 0 0% 100%;
+    --card-shadow: 0 0% 0%;
+    
+    /* Casino table colors - Rich, authentic felt green */
+    --felt-primary: 142 45% 25%;
+    --felt-dark: 142 50% 20%;
+    --felt-accent: 142 40% 30%;
+    --felt-highlight: 142 35% 35%;
+    
+    /* Gold accents for premium feel */
+    --gold: 45 100% 51%;
+    --gold-dark: 45 100% 41%;
+    
+    /* UI colors */
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --danger: 0 72% 51%;
   }
 }
 
-/* Card-themed helpers */
+/* Modern card components */
 @layer components {
+  /* Typography */
   .card-font {
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  
+  .card-number-font {
     font-family: Georgia, "Times New Roman", serif;
+    font-weight: 700;
   }
 
+  /* Premium casino table background */
   .card-table-bg {
-    /* Felt table gradient */
-    background: radial-gradient(circle at 30% 20%, var(--felt-green-1) 0%, var(--felt-green-2) 35%, var(--felt-green-3) 65%, var(--felt-green-4) 100%);
-    background-attachment: fixed;
+    background: radial-gradient(
+      ellipse at center,
+      hsl(var(--felt-primary)) 0%,
+      hsl(var(--felt-dark)) 50%,
+      hsl(142 55% 15%) 100%
+    );
+    position: relative;
+  }
+  
+  /* Subtle texture overlay for authenticity */
+  .card-table-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+    pointer-events: none;
+    opacity: 0.5;
   }
 
+  /* Clean, modern panels */
   .card-panel {
-    background-color: hsl(var(--card-cream));
-    border: 1px solid #e5dcc7;
-    border-radius: 0.75rem;
-    box-shadow: 0 2px 0 #c9b99b, 0 6px 12px rgba(0,0,0,0.15);
+    background: linear-gradient(145deg, rgba(226, 220, 206, 0.95), rgba(210, 200, 182, 0.92));
+    border: 2px solid rgba(180, 165, 140, 0.4);
+    border-radius: 1rem;
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.15),
+      0 10px 25px -3px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Gold accent panel for premium areas */
+  .card-panel-gold {
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.08));
+    border: 2px solid hsl(var(--gold) / 0.3);
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 10px 25px -3px rgba(255, 215, 0, 0.2),
+      0 0 0 1px hsl(var(--gold) / 0.2) inset;
   }
 
+  /* Card outline utility */
   .card-outline {
-    border: 1px solid #d8caae;
-    border-radius: 0.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+  }
+  
+  .card-outline:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   }
 
-  /* Responsive playing card sizing */
+  /* Responsive playing cards with modern proportions */
   .playing-card {
-    --card-width: clamp(48px, 10vw, 96px);
+    --card-width: clamp(60px, 11vw, 100px);
     width: var(--card-width);
-    height: calc(var(--card-width) * 1.5);
+    height: calc(var(--card-width) * 1.4);
+    background: white;
+    border-radius: calc(var(--card-width) * 0.08);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  
+  .playing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.15),
+      0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
   .playing-card-sm {
-    --card-width: clamp(36px, 8vw, 72px);
+    --card-width: clamp(45px, 9vw, 75px);
   }
+  
   .playing-card-lg {
-    --card-width: clamp(64px, 12vw, 128px);
+    --card-width: clamp(75px, 13vw, 130px);
   }
+  
   .playing-card-symbol {
-    font-size: clamp(16px, 3.5vw, 24px);
+    font-size: clamp(20px, 4vw, 28px);
+    line-height: 1;
+  }
+  
+  /* Card back design */
+  .playing-card-back {
+    background: linear-gradient(135deg, hsl(220 13% 18%), hsl(220 20% 25%));
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .playing-card-back::before {
+    content: "";
+    position: absolute;
+    inset: 8%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: calc(var(--card-width) * 0.06);
+  }
+
+  /* Chip styles */
+  .chip {
+    width: clamp(40px, 8vw, 60px);
+    height: clamp(40px, 8vw, 60px);
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.2),
+      0 4px 8px rgba(0, 0, 0, 0.15),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease;
+  }
+  
+  .chip:hover {
+    transform: scale(1.1);
+  }
+  
+  .chip:active {
+    transform: scale(0.95);
+  }
+
+  /* Button styles */
+  .btn-primary {
+    background: linear-gradient(145deg, hsl(var(--gold)), hsl(var(--gold-dark)));
+    color: hsl(var(--card-black));
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    border: none;
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.2),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.875rem;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.25),
+      0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.875rem;
+  }
+  
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Score display */
+  .score-display {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Bet amount display */
+  .bet-amount {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 700;
+    color: hsl(var(--gold));
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Status messages */
+  .status-win {
+    color: hsl(var(--success));
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .status-lose {
+    color: hsl(var(--danger));
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .status-push {
+    color: hsl(var(--warning));
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Animations */
+  @keyframes card-deal {
+    from {
+      opacity: 0;
+      transform: translateY(-20px) rotateY(90deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) rotateY(0);
+    }
+  }
+  
+  .card-deal-animation {
+    animation: card-deal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  @keyframes chip-stack {
+    from {
+      opacity: 0;
+      transform: scale(0.5) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  .chip-stack-animation {
+    animation: chip-stack 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+/* Responsive adjustments for all screen sizes */
+@layer components {
+  /* Container utilities */
+  .game-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: clamp(0.75rem, 2vw, 2rem);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .responsive-grid {
+    display: grid;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  }
+  
+  .card-hand {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Mobile first responsive styles */
+@media (max-width: 640px) {
+  .card-panel {
+    border-radius: 0.75rem;
+    padding: clamp(0.75rem, 3vw, 1rem);
+    margin: 0.5rem;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.75rem;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .score-display {
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+  }
+  
+  .bet-amount {
+    font-size: clamp(1rem, 5vw, 1.5rem);
+  }
+  
+  .playing-card {
+    --card-width: clamp(50px, 12vw, 70px);
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .card-panel {
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.75rem 1.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Large screen styles */
+@media (min-width: 1025px) {
+  .card-panel {
+    padding: 2rem;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.875rem 2.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 375px) {
+  .playing-card {
+    --card-width: clamp(40px, 10vw, 60px);
+  }
+  
+  .chip {
+    width: clamp(35px, 7vw, 50px);
+    height: clamp(35px, 7vw, 50px);
+  }
+  
+  .card-panel {
+    margin: 0.25rem;
+  }
+}
+
+/* Landscape mobile devices */
+@media (max-width: 900px) and (orientation: landscape) {
+  .game-container {
+    padding: 0.5rem;
+  }
+  
+  .card-panel {
+    padding: 0.75rem;
+  }
+  
+  .playing-card {
+    --card-width: clamp(45px, 8vh, 70px);
+  }
+  
+  .score-display {
+    font-size: clamp(1.25rem, 4vh, 2rem);
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1920px) {
+  .game-container {
+    max-width: 1600px;
+  }
+  
+  .playing-card {
+    --card-width: min(110px, 8vw);
   }
 }

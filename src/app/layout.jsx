@@ -13,7 +13,7 @@ export default async function RootLayout({ children }) {
     <html lang="en" className="card-font">
       <body className="min-h-screen card-table-bg">
         <header className="border-b bg-white/80 backdrop-blur card-outline">
-          <div className="max-w-full md:max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-3 flex items-center gap-2 sm:gap-4 flex-wrap">
+          <div className="max-w-full w-full mx-auto px-2 sm:px-4 py-2 sm:py-3 flex items-center gap-2 sm:gap-4 flex-wrap">
             <Link href="/" className="font-semibold">Blackjack Royale</Link>
             <nav className="flex gap-2 sm:gap-3 text-sm flex-wrap">
               {user && <Link href="/home" className="underline">Home</Link>}
@@ -42,8 +42,8 @@ export default async function RootLayout({ children }) {
             </div>
           </div>
         </header>
-        <main className="max-w-full md:max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-8">
-          <div className="card-panel p-6">
+        <main className="w-full mx-auto px-2 sm:px-4 py-6 sm:py-8">
+          <div className="card-panel w-full p-4 sm:p-6">
             {children}
           </div>
         </main>
