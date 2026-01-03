@@ -60,17 +60,32 @@ export default function BlackjackTable({ initialCoins }) {
     }
   }, [result])
 
+  // Auto-resolve when player hits exactly 21: stand immediately
+  useEffect(() => {
+    if (!result && player.length && playerTotal === 21) {
+      stand()
+    }
+  }, [playerTotal, player.length, result])
+
   return (
     <div className="space-y-4">
-      <ul className="list-disc pl-6">
-        <li>Deck of 52 cards</li>
-        <li>Dealer hits until 17</li>
-        <li>Face cards = 10</li>
-        <li>Ace = 1 or 11</li>
-        <li>Blackjack = Ace + 10</li>
-        <li>Bust = over 21</li>
-      </ul>
-
+      {/* Top result banner */}
+      <div className="min-h-[44px]">
+        {result && (
+          <div
+            className={
+              `text-3xl font-bold tracking-wide ` +
+              (result === 'win'
+                ? 'text-green-700'
+                : result === 'lose'
+                ? 'text-red-700'
+                : 'text-gray-700')
+            }
+          >
+            {result.toUpperCase()}
+          </div>
+        )}
+      </div>
       <div className="flex items-center gap-2 flex-wrap">
         <span>Coins:</span>
         <strong>{coins}</strong>
@@ -114,7 +129,6 @@ export default function BlackjackTable({ initialCoins }) {
       </div>
 
       <div className="min-h-[24px]">
-        {result && <p>Result: <strong>{result.toUpperCase()}</strong></p>}
         {!canPlay && !result && (
           <p className="text-sm text-red-600">{coins <= 0 ? 'Out of coins. Increase balance to play.' : 'Adjust bet to be within available coins.'}</p>
         )}

@@ -4,7 +4,7 @@ import EarnCoins from '@/components/earn/EarnCoins'
 
 export default async function Page() {
   const user = await getSessionUser()
-  if (!user) redirect('/login')
+  if (!user) redirect('/login?next=/earn')
   return (
     <main className="max-w-3xl mx-auto py-4 space-y-4">
       <h1 className="text-xl font-bold">Earn Coins</h1>

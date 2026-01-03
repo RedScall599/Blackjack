@@ -23,7 +23,7 @@ export async function createSession(userId) {
     path: '/',
     expires: expiresAt
   })
-  return token
+  return { token, expiresAt }
 }
 
 /**

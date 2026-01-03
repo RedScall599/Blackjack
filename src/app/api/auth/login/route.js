@@ -14,8 +14,16 @@ export async function POST(request) {
     if (!user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
-    await createSession(user.id)
-    return NextResponse.json({ user }, { status: 200 })
+    const { token, expiresAt } = await createSession(user.id)
+    const res = NextResponse.json({ user }, { status: 200 })
+    res.cookies.set('session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      expires: new Date(expiresAt)
+    })
+    return res
   } catch (error) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }

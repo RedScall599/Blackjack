@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function LoginPage() {
   const router = useRouter()
+  const params = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -28,7 +29,8 @@ export default function LoginPage() {
       if (!res.ok) {
         setError(data.error || 'Login failed')
       } else {
-        router.replace('/home')
+        const next = params?.get('next')
+        router.replace(next || '/home')
       }
     } catch (e) {
       setError('Network error')
