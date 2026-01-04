@@ -5,7 +5,7 @@ import PlayingCard from '@/components/game/PlayingCard'
 import CoinRain from '@/components/ui/CoinRain'
 
 export default function BlackjackTable({ initialCoins }) {
-  const { player, dealer, playerTotal, dealerTotal, bet, setBet, result, deal, hit, stand, resetDeck } = useGame()
+  const { player, dealer, dealerRevealed, playerTotal, dealerTotal, bet, setBet, result, deal, hit, stand, resetDeck } = useGame()
   const [coins, setCoins] = useState(initialCoins ?? 100)
   const [message, setMessage] = useState('')
   const [showCoins, setShowCoins] = useState(false)
@@ -144,10 +144,12 @@ export default function BlackjackTable({ initialCoins }) {
           </div>
         </div>
         <div>
-          <h3 className="font-semibold">Dealer Hand ({dealerTotal})</h3>
+          <h3 className="font-semibold">
+            Dealer Hand {dealerRevealed ? `(${dealerTotal})` : (dealer.length ? `(${dealer[0].rank}${dealer[0].suit} + ?)` : '')}
+          </h3>
           <div className="flex gap-2 flex-wrap">
             {dealer.map((c, i) => (
-              <PlayingCard key={i} card={c} size="lg" />
+              <PlayingCard key={i} card={c} size="lg" faceDown={!dealerRevealed && i === 1} />
             ))}
           </div>
         </div>
@@ -157,7 +159,7 @@ export default function BlackjackTable({ initialCoins }) {
         {!canPlay && !result && (
           <p className="text-sm text-red-600">{coins <= 0 ? 'Out of coins. Increase balance to play.' : 'Adjust bet to be within available coins.'}</p>
         )}
-        {message && <p className="text-sm text-gray-700">{message}</p>}
+        {message && <p className="text-sm text-black">{message}</p>}
       </div>
     </div>
   )

@@ -1,32 +1,39 @@
 // Next.js Middleware - Route protection and authentication
 import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 
-// Routes that require authentication
-const protectedRoutes = ['/dashboard', '/donors', '/campaigns', '/donations', '/segments', '/workflows', '/tasks']
+// Routes that require authentication for Blackjack Royale
+const protectedRoutes = ['/product', '/earn', '/rubric-evidence', '/reflection']
 
-// Routes that should redirect to dashboard if already authenticated
+// Routes that should redirect to product if already authenticated
 const authRoutes = ['/login', '/register']
 
 export async function proxy(request) {
-  // TODO: Get session token from cookies
-  // TODO: Check if current path requires authentication
-  // TODO: Validate session by calling session API
-  // TODO: Redirect unauthenticated users to login
-  // TODO: Redirect authenticated users away from auth pages
-  // TODO: Preserve intended destination after login
+  const { pathname, search } = request.nextUrl
+  const sessionToken = request.cookies.get('session')?.value
+
+  const isProtected = protectedRoutes.some((route) => pathname.startsWith(route))
+  const isAuthPage = authRoutes.some((route) => pathname.startsWith(route))
+
+  // If accessing a protected route without a session, redirect to login with next
+  if (isProtected && !sessionToken) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    url.searchParams.set('next', pathname + (search || ''))
+    return NextResponse.redirect(url)
+  }
+
+  // If already authenticated, redirect away from auth pages to main product
+  if (isAuthPage && sessionToken) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/product'
+    return NextResponse.redirect(url)
+  }
+
+  // Otherwise allow the request
+  return NextResponse.next()
 }
 
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except:
-     * - api routes (except auth check)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (public directory)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-  ],
+// Optional: allow usage if imported by a root middleware file
+export function middleware(request) {
+  return proxy(request)
 }

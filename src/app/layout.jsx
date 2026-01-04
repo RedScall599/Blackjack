@@ -22,8 +22,8 @@ export default async function RootLayout({ children }) {
               <Link href="/about" className="nav-btn">About</Link>
               <Link href="/why" className="nav-btn">Why</Link>
               <Link href="/features" className="nav-btn">Features</Link>
-              {user && <Link href="/rubric-evidence" className="nav-btn">Evidence</Link>}
-              {user && <Link href="/reflection" className="nav-btn">Reflection</Link>}
+              {user?.role === 'ADMIN' && <Link href="/rubric-evidence" className="nav-btn">Evidence</Link>}
+              {user?.role === 'ADMIN' && <Link href="/reflection" className="nav-btn">Reflection</Link>}
             </nav>
             <div className="ml-auto text-sm flex items-center gap-3">
               {user ? (

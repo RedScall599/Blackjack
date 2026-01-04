@@ -3,6 +3,10 @@
 
 import { useMemo, useState } from 'react'
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 function buildDeck() {
   const suits = ['♠', '♥', '♦', '♣']
   const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -49,6 +53,7 @@ export function useGame() {
   const [deck, setDeck] = useState(() => shuffle(buildDeck()))
   const [player, setPlayer] = useState([])
   const [dealer, setDealer] = useState([])
+  const [dealerRevealed, setDealerRevealed] = useState(false)
   const [bet, setBet] = useState(10)
   const [result, setResult] = useState(null) // 'win' | 'lose' | 'push'
   const playerTotal = useMemo(() => handTotals(player), [player])
@@ -61,6 +66,7 @@ export function useGame() {
     setDeck(d)
     setPlayer(p)
     setDealer(dl)
+    setDealerRevealed(false)
     setResult(null)
   }
 
@@ -75,16 +81,19 @@ export function useGame() {
     }
   }
 
-  function stand() {
+  async function stand() {
     if (result) return
-    // Dealer hits until 17
+    // Reveal dealer hole card
+    setDealerRevealed(true)
+    // Dealer hits until 17 (sequential with delay)
     let d = deck.slice()
     let dl = dealer.slice()
     while (handTotals(dl) < 17 && d.length) {
+      await sleep(500)
       dl = dl.concat(d.pop())
+      setDeck(d.slice())
+      setDealer(dl.slice())
     }
-    setDeck(d)
-    setDealer(dl)
     const pt = handTotals(player)
     const dt = handTotals(dl)
     if (dt > 21) setResult('win')
@@ -97,6 +106,7 @@ export function useGame() {
     setDeck(shuffle(buildDeck()))
     setPlayer([])
     setDealer([])
+    setDealerRevealed(false)
     setResult(null)
   }
 
@@ -104,6 +114,7 @@ export function useGame() {
     deck,
     player,
     dealer,
+    dealerRevealed,
     playerTotal,
     dealerTotal,
     bet,

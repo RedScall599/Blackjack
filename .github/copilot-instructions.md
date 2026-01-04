@@ -313,17 +313,46 @@ Coins updated
 
 Page 6 – Rubric Evidence
 
-CCC.1.1:
+CCC.1.1
+
+Understand and identify a problem
+I can identify and understand a relevant problem within my field of study, its implications, and the context surrounding the problem.
+
+I can plan for constraints and potential impacts related to the problem.
+
+I can proactively recognize future challenges connected to the problem. 
+
+I can evaluate solutions that have previously been attempted and describe their successes and failures.
+
+I can evaluate solution options and assess which solution best addresses factors such as urgency, complexity, available resources, and potential impact.
+
 
 About Page
 
 README section
 
-CCC.1.2:
+ 
+ 	
+CCC.1.2
+
+Identify and plan a solution
+ 	
+I can identify a solution that solves the problem and identifies potential challenges including technical resource requirements (e.g., database limitations, cloud resources, technical skill or time constraint for the project etc.) 
+
+I can create a detailed project plan that outlines implementation of my solution and uses project management tools that embrace Sprints and Agile methodologies.
+
 
 Architecture explanation
 
-CCC.1.3:
+ 
+ 	
+CCC.1.3
+
+Implement a solution
+ 	
+I can implement a solution using the most appropriate industry-accepted method (e.g., Agile, DevOps, Interface, Constructor, Implementation) that leads to effective implementation of the solution.
+
+I can implement a solution that applies at least two appropriate tools and/or best practices that relates to the problem I aim to solve.
 
 Live game demo
 

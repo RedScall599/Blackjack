@@ -30,7 +30,10 @@ export default function LoginPage() {
         setError(data.error || 'Login failed')
       } else {
         const next = params?.get('next')
-        router.replace(next || '/home')
+        const dest = next || '/product'
+        router.replace(dest)
+        // Ensure server components re-read cookies immediately
+        router.refresh()
       }
     } catch (e) {
       setError('Network error')
@@ -47,7 +50,7 @@ export default function LoginPage() {
       </CardHeader>
       <CardContent>
         <div className="text-sm text-gray-600 mb-3">
-          New users start with 100 coins. If you seeded the DB, you can also use the demo accounts.
+          New users start with 100 coins.
         </div>
         {error && <p className="text-red-600 text-sm mb-2">{error}</p>}
         

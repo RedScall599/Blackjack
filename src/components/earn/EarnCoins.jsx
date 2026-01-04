@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function EarnCoins({ initialCoins }) {
   const [coins, setCoins] = useState(initialCoins ?? 0)
@@ -8,6 +8,7 @@ export default function EarnCoins({ initialCoins }) {
   const [answer, setAnswer] = useState('')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const controllerRef = useRef(null)
   const earningDisabled = coins >= 100
 
   async function fetchProblem(lvl = level) {
@@ -18,7 +19,17 @@ export default function EarnCoins({ initialCoins }) {
     setLoading(true)
     setMessage('')
     try {
-      const res = await fetch(`/api/earn/problem?level=${encodeURIComponent(lvl)}`)
+      // Abort any in-flight request before starting a new one
+      if (controllerRef.current) controllerRef.current.abort()
+      const controller = new AbortController()
+      controllerRef.current = controller
+      const id = setTimeout(() => controller.abort(), 10000)
+      const res = await fetch(`/api/earn/problem?level=${encodeURIComponent(lvl)}` , {
+        signal: controller.signal,
+        cache: 'no-store',
+        credentials: 'same-origin'
+      })
+      clearTimeout(id)
       const data = await res.json()
       if (res.ok) {
         setProblem(data)
@@ -26,8 +37,12 @@ export default function EarnCoins({ initialCoins }) {
       } else {
         setMessage(data.error || 'Failed to load problem')
       }
-    } catch {
-      setMessage('Network error')
+    } catch (e) {
+      if (e?.name === 'AbortError') {
+        setMessage('Request timed out. Try again.')
+      } else {
+        setMessage('Network error')
+      }
     } finally {
       setLoading(false)
     }
@@ -42,30 +57,48 @@ export default function EarnCoins({ initialCoins }) {
     setLoading(true)
     setMessage('')
     try {
+      if (!problem) return
+      // Abort any in-flight request before starting a new one
+      if (controllerRef.current) controllerRef.current.abort()
+      const controller = new AbortController()
+      controllerRef.current = controller
+      const id = setTimeout(() => controller.abort(), 10000)
       const res = await fetch('/api/earn/solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: problem.token, answer })
+        body: JSON.stringify({ token: problem.token, answer }),
+        signal: controller.signal,
+        cache: 'no-store',
+        credentials: 'same-origin'
       })
+      clearTimeout(id)
       const data = await res.json()
       if (res.ok) {
         setCoins(data.user.coins)
         setMessage(`✅ Correct! +${data.reward} coins. New total: ${data.user.coins}`)
-        fetchProblem(level)
+        // Do not auto-fetch a new problem to avoid looped requests
+        setProblem(null)
+        setAnswer('')
       } else {
         setMessage(`❌ ${data.error || 'Incorrect answer'}`)
       }
-    } catch {
-      setMessage('Network error')
+    } catch (e) {
+      if (e?.name === 'AbortError') {
+        setMessage('Request timed out. Try again.')
+      } else {
+        setMessage('Network error')
+      }
     } finally {
       setLoading(false)
     }
   }
 
+  // Cleanup any pending request on unmount
   useEffect(() => {
-    fetchProblem(level)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [level])
+    return () => {
+      if (controllerRef.current) controllerRef.current.abort()
+    }
+  }, [])
 
   return (
     <div className="space-y-3 sm:space-y-4 max-w-xl mx-auto">
@@ -83,6 +116,15 @@ export default function EarnCoins({ initialCoins }) {
           <option value="hard">Hard: PEMDAS (parentheses/exponents) — +50</option>
         </select>
         <button className="bg-gray-600 text-white px-2 py-1 rounded" onClick={() => fetchProblem(level)} disabled={loading || earningDisabled}>New</button>
+        {loading && (
+          <button
+            className="bg-gray-400 text-white px-2 py-1 rounded"
+            onClick={() => controllerRef.current?.abort()}
+            type="button"
+          >
+            Cancel
+          </button>
+        )}
       </div>
 
       <div className="border rounded p-3 sm:p-4">
@@ -99,7 +141,7 @@ export default function EarnCoins({ initialCoins }) {
             <button className="bg-blue-600 text-white px-3 py-1 rounded" onClick={submit} disabled={loading || answer === '' || earningDisabled}>Submit</button>
           </div>
         ) : (
-          <p className="text-sm">No problem loaded.</p>
+          <p className="text-sm">No problem loaded. Click "New" to start.</p>
         )}
       </div>
 

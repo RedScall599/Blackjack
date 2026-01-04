@@ -6,16 +6,26 @@ export default function WhyPage() {
       <h2 className="text-xl font-semibold">Why Blackjack Royale — CCC.1.2</h2>
 
       <div>
-        <p className="font-semibold">Show your plan and explain your solution.</p>
+        <p className="font-semibold">Why I chose Blackjack</p>
         <ul className="list-disc pl-6 space-y-1">
-          <li>This supports CCC.1.2: solution and architecture explained here; evidence links to Features and Product.</li>
-          <li>Why a database is needed: persist users, sessions, coin balances, and game results for real accountability.</li>
-          <li>Why authentication is needed: identify players, secure HTTP-only session cookies, prevent fake coin changes.</li>
+          <li>I enjoy the game: personal interest keeps the project engaging.</li>
+          <li>Helps users think: builds probability intuition and pattern recognition.</li>
+          <li>Decision-making practice: hit/stand choices with immediate feedback.</li>
+          <li>Simple rules, real risk: busts and losses reduce coins to show consequences.</li>
+          <li>Rewards success: wins increase coins to reinforce good decisions.</li>
+          <li>Work-to-earn: math challenges on Earn give the feeling of earning coins.</li>
+          <li>Learning focus: teaches risk management and expected value in a friendly format.</li>
+          <li>This supports CCC.1.2: clear rationale for solution choice and user impact.</li>
         </ul>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link className="nav-btn" href="/product">Play Blackjack</Link>
+          <Link className="nav-btn" href="/earn">Earn Coins</Link>
+          <Link className="nav-btn" href="/features">See Features</Link>
+        </div>
       </div>
 
       <div>
-        <p className="font-semibold">Your solution idea (what you’re building and why)</p>
+        <p className="font-semibold">My solution idea </p>
         <ul className="list-disc pl-6 space-y-1">
           <li>Build a real Blackjack game with persistent coins and round history.</li>
           <li>Teach probability, dealer logic, and decision-making through authentic rules.</li>
@@ -24,21 +34,9 @@ export default function WhyPage() {
         </ul>
       </div>
 
-      <div>
-        <p className="font-semibold">Features list (what your app will do)</p>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>Signup/Login with hashed passwords and server-side sessions.</li>
-          <li>Play Blackjack: 52-card deck; dealer hits to 17; Ace = 1 or 11; push keeps coins.</li>
-          <li>Bet coins, see live totals, auto-resolve when player reaches 21.</li>
-          <li>Persist each round: store bet, result (win/lose/push), and coin change.</li>
-          <li>Earn Coins mini-game: math challenges to increase balance safely.</li>
-          <li>Explain rules and odds on the Why and Features pages for learning.</li>
-          <li>UI feedback: win/lose banner and celebratory coin rain on wins.</li>
-        </ul>
-      </div>
 
       <div>
-        <p className="font-semibold">Challenges you expect (and how you’ll handle them)</p>
+        <p className="font-semibold">Challenges I expect </p>
         <ul className="list-disc pl-6 space-y-1">
           <li>Fairness and rules: implement a pure game engine; dealer hits-to-17; Ace handling; push logic.</li>
           <li>State sync and persistence: validate on the server; save after each round; return updated coins.</li>
@@ -56,9 +54,26 @@ export default function WhyPage() {
           <li>Sprint 2: Game Engine + UI — deck, hand totals, dealer loop; product page UI.</li>
           <li>Sprint 3: Persistence + Coins — /api/game/play writes results; coin updates returned to client.</li>
           <li>Sprint 4: Learning + Polish — Why/Features pages; Earn Coins; banners; animations.</li>
-          <li>Evidence: see <Link className="underline" href="/features">Features</Link>, <Link className="underline" href="/product">Product</Link>, and <Link className="underline" href="/rubric-evidence">Rubric Evidence</Link> for CCC.1.2 demonstration.</li>
-          <li>CCC.1.1: persistence problem and context are covered on <Link className="underline" href="/about">About</Link>.</li>
-          <li>CCC.1.3: live demo of the product with coin tracking is shown on <Link className="underline" href="/product">Product</Link>.</li>
+          <li>
+            Evidence:
+            <span className="inline-flex gap-2 ml-2 flex-wrap">
+              <Link className="nav-btn" href="/features">Features</Link>
+              <Link className="nav-btn" href="/product">Product</Link>
+            </span>
+            <span className="ml-2 text-sm">(CCC.1.2)</span>
+          </li>
+          <li>
+            CCC.1.1:
+            <span className="inline-flex gap-2 ml-2 flex-wrap">
+              <Link className="nav-btn" href="/about">About</Link>
+            </span>
+          </li>
+          <li>
+            CCC.1.3:
+            <span className="inline-flex gap-2 ml-2 flex-wrap">
+              <Link className="nav-btn" href="/product">Product</Link>
+            </span>
+          </li>
         </ul>
       </div>
     </div>

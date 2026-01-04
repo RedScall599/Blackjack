@@ -1,7 +1,7 @@
 {
-  "name": "donor-connect",
+  "name": "blackjack-royale",
   "version": "0.1.0",
-  "description": "Donor retention platform for nonprofits",
+  "description": "Web-based Blackjack game with auth and persistence",
   "private": true,
   "type": "module",
   "scripts": {
@@ -64,7 +64,7 @@
     "playwright": "^1.57.0",
     "postcss": "^8.5.6",
     "prisma": "^7.1.0",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^3.4.14",
     "vite": "^7.3.0",
     "vitest": "^4.0.15"
   },

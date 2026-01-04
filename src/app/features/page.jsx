@@ -3,21 +3,21 @@ import Link from 'next/link'
 export default function FeaturesPage() {
   return (
     <div className="max-w-3xl mx-auto p-8 space-y-6">
-      <h2 className="text-xl font-semibold">Features — CCC.1.3</h2>
+      <h2 className="text-xl font-semibold">Features</h2>
 
       <div>
-        <p className="font-semibold">This is the actual working tool users interact with (CCC.1.3)</p>
+        <p className="font-semibold">This is the actual working tool users interact with </p>
         <ul className="list-disc pl-6 space-y-1">
-          <li>Live Blackjack table with Hit, Stand, Bet, Reset on <Link className="underline" href="/product">Product</Link>.</li>
+          <li>Live Blackjack table with Hit, Stand, Bet, Reset on <Link className="nav-btn" href="/product">Play</Link>.</li>
           <li>Auto-resolve when player reaches 21; win/lose banner with celebratory coin rain.</li>
           <li>Coins and results persist after every round via <code>/api/game/play</code> and the Game table.</li>
           <li>Sessions (HTTP-only cookies) keep you logged in and protect coin changes.</li>
-          <li>This supports CCC.1.3: users can play, see balance change, and verify persistence live.</li>
+          <li>users can play, see balance change, and verify persistence live.</li>
         </ul>
       </div>
 
       <div>
-        <p className="font-semibold">Your core feature(s) working</p>
+        <p className="font-semibold">My core feature(s) </p>
         <ul className="list-disc pl-6 space-y-1">
           <li>Real rules: 52-card deck; dealer hits until 17; face cards = 10; Ace = 1 or 11; push keeps coins.</li>
           <li>Bet validation: must be ≤ coins; server verifies and updates DB atomically.</li>
@@ -28,7 +28,7 @@ export default function FeaturesPage() {
       </div>
 
       <div>
-        <p className="font-semibold">Why would I buy your solution over others?</p>
+        <p className="font-semibold">Why would I play your solution over others?</p>
         <ul className="list-disc pl-6 space-y-1">
           <li>Real persistence: coins and history don’t disappear; audited in the database.</li>
           <li>Fair, transparent rules: dealer logic and Ace handling are consistent and documented.</li>
@@ -52,7 +52,7 @@ export default function FeaturesPage() {
         <ul className="list-disc pl-6 space-y-1">
           <li>Database: store users, sessions, coins, and game results so progress never disappears.</li>
           <li>Authentication: identify players, secure sessions, and prevent fake coin changes.</li>
-          <li>Evidence pages: see <Link className="underline" href="/why">Why</Link> (CCC.1.2) and <Link className="underline" href="/product">Product</Link> (CCC.1.3).</li>
+          
         </ul>
       </div>
     </div>
