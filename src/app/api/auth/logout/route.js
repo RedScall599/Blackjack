@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server'
 import { deleteSession } from '@/lib/session'
 
+export const runtime = 'nodejs'
+
 export async function POST(request) {
   try {
     const sessionToken = request.cookies.get('session')?.value

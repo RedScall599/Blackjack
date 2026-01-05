@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/session'
 
+export const runtime = 'nodejs'
+
 export async function GET(request) {
   try {
     const sessionToken = request.cookies.get('session')?.value

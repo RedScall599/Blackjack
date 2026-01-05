@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { getSession } from '@/lib/session'
 
+export const runtime = 'nodejs'
+
 export async function POST(request) {
   // API Auth Pattern (REQUIRED)
   const sessionToken = request.cookies.get('session')?.value

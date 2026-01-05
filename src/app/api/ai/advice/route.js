@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/session'
 
+export const runtime = 'nodejs'
+
 const OPEN_API_URL = 'https://api.openai.com/v1/chat/completions'
 const MODEL = 'gpt-4o-mini'
 

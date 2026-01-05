@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server'
 import { register } from '@/lib/auth'
 
+export const runtime = 'nodejs'
+
 export async function POST(request) {
   try {
     const body = await request.json()

@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server'
 import { login } from '@/lib/auth'
 import { createSession } from '@/lib/session'
 
+export const runtime = 'nodejs'
+
 export async function POST(request) {
   try {
     const body = await request.json()
