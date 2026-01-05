@@ -59,15 +59,38 @@ export function useGame() {
   const playerTotal = useMemo(() => handTotals(player), [player])
   const dealerTotal = useMemo(() => handTotals(dealer), [dealer])
 
-  function deal() {
-    const d = deck.slice()
-    const p = [d.pop(), d.pop()]
-    const dl = [d.pop(), d.pop()]
-    setDeck(d)
-    setPlayer(p)
-    setDealer(dl)
+  async function deal() {
+    // Stage the initial deal so the dealer's card shows first
+    let d = deck.slice()
+    const p = []
+    const dl = []
+    setPlayer([])
+    setDealer([])
     setDealerRevealed(false)
     setResult(null)
+
+    // Dealer first card
+    dl.push(d.pop())
+    setDealer(dl.slice())
+    setDeck(d.slice())
+    await sleep(350)
+
+    // Player first card
+    p.push(d.pop())
+    setPlayer(p.slice())
+    setDeck(d.slice())
+    await sleep(350)
+
+    // Dealer second card (face-down by UI until reveal)
+    dl.push(d.pop())
+    setDealer(dl.slice())
+    setDeck(d.slice())
+    await sleep(350)
+
+    // Player second card
+    p.push(d.pop())
+    setPlayer(p.slice())
+    setDeck(d.slice())
   }
 
   function hit() {
