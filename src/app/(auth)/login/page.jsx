@@ -30,7 +30,7 @@ export default function LoginPage() {
         setError(data.error || 'Login failed')
       } else {
         const next = params?.get('next')
-        const dest = next || '/product'
+        const dest = next || '/home'
         router.replace(dest)
         // Ensure server components re-read cookies immediately
         router.refresh()
