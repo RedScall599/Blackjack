@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 // Minimal matcher covering all paths; we'll skip assets within the function
-export const config = { matcher: ['/:path*'] }
+// export const config = { matcher: ['/:path*'] }
 
 const protectedRoutes = ['/product', '/earn', '/rubric-evidence', '/reflection']
 const authRoutes = ['/login', '/register']

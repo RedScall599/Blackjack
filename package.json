@@ -31,7 +31,6 @@
     "@prisma/client": "^7.1.0",
     "@prisma/client-runtime-utils": "7.1.0",
     "@prisma/extension-accelerate": "^3.0.1",
-    "@tailwindcss/postcss": "^4.1.18",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
