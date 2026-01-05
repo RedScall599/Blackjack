@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "test": "vitest",
     "test:node": "vitest --project=node",
     "test:client": "vitest --project=client",
