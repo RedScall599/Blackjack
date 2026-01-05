@@ -1,17 +1,21 @@
 import { NextResponse } from 'next/server'
 
-// Define config directly here so Next.js can statically analyze it
-export const config = {
-	matcher: [
-		'/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-	],
-}
+// Minimal matcher covering all paths; we'll skip assets within the function
+export const config = { matcher: ['/:path*'] }
 
 const protectedRoutes = ['/product', '/earn', '/rubric-evidence', '/reflection']
 const authRoutes = ['/login', '/register']
 
 export default function middleware(request) {
-	const { pathname, search } = request.nextUrl
+	const { pathname } = request.nextUrl
+	// Skip static assets and Next internals to avoid interfering
+	if (
+		pathname.startsWith('/_next') ||
+		pathname === '/favicon.ico' ||
+		pathname.match(/\.(svg|png|jpg|jpeg|gif|webp|ico)$/)
+	) {
+		return NextResponse.next()
+	}
 	const sessionToken = request.cookies.get('session')?.value
 
 	const isProtected = protectedRoutes.some((route) => pathname.startsWith(route))
@@ -20,7 +24,8 @@ export default function middleware(request) {
 	if (isProtected && !sessionToken) {
 		const url = request.nextUrl.clone()
 		url.pathname = '/login'
-		url.searchParams.set('next', pathname + (search || ''))
+		// Preserve intended destination after login
+		url.searchParams.set('next', pathname)
 		return NextResponse.redirect(url)
 	}
 
