@@ -33,7 +33,4 @@ export async function proxy(request) {
   return NextResponse.next()
 }
 
-// Optional: allow usage if imported by a root middleware file
-export function middleware(request) {
-  return proxy(request)
-}
+// This file now only exports the proxy function for potential future reuse.
