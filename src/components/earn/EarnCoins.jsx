@@ -102,13 +102,13 @@ export default function EarnCoins({ initialCoins }) {
 
   return (
     <div className="space-y-3 sm:space-y-4 max-w-xl mx-auto">
-      <div className="flex items-center gap-2 text-sm">
+      <div className="flex items-center gap-2 text-sm text-white">
         <span>Coins:</span>
         <strong>{coins}</strong>
-        {earningDisabled && <span className="text-red-600">(Limit reached)</span>}
+        {earningDisabled && <span className="text-red-400">(Limit reached)</span>}
       </div>
 
-      <div className="flex items-center gap-2 flex-wrap text-sm">
+      <div className="flex items-center gap-2 flex-wrap text-sm text-white">
         <label htmlFor="level">Difficulty:</label>
         <select id="level" className="border px-2 py-1 rounded" value={level} onChange={(e) => setLevel(e.target.value)} disabled={earningDisabled}>
           <option value="easy">Easy: mixed + and − — +5</option>
@@ -128,10 +128,10 @@ export default function EarnCoins({ initialCoins }) {
       </div>
 
       <div className="border rounded p-3 sm:p-4">
-        <p className="mb-2 text-sm">Solve to earn coins:</p>
+        <p className="mb-2 text-sm text-white">Solve to earn coins:</p>
         {problem ? (
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-base sm:text-lg font-semibold">{problem.expression} =</span>
+            <span className="text-base sm:text-lg font-semibold text-white">{problem.expression} =</span>
             <input
               type="number"
               className="border px-2 py-1 rounded w-24"
@@ -141,12 +141,12 @@ export default function EarnCoins({ initialCoins }) {
             <button className="bg-blue-600 text-white px-3 py-1 rounded" onClick={submit} disabled={loading || answer === '' || earningDisabled}>Submit</button>
           </div>
         ) : (
-          <p className="text-sm">No problem loaded. Click "New" to start.</p>
+          <p className="text-sm text-white">No problem loaded. Click "New" to start.</p>
         )}
       </div>
 
       <div className="min-h-[20px]">
-        {message && <p className="text-sm">{message}</p>}
+        {message && <p className="text-sm text-white">{message}</p>}
       </div>
     </div>
   )
