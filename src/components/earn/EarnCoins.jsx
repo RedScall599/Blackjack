@@ -110,7 +110,7 @@ export default function EarnCoins({ initialCoins }) {
 
       <div className="flex items-center gap-2 flex-wrap text-sm text-white">
         <label htmlFor="level">Difficulty:</label>
-        <select id="level" className="border px-2 py-1 rounded" value={level} onChange={(e) => setLevel(e.target.value)} disabled={earningDisabled}>
+        <select id="level" className="bg-emerald-700 text-white border border-emerald-500 px-2 py-1 rounded" value={level} onChange={(e) => setLevel(e.target.value)} disabled={earningDisabled}>
           <option value="easy">Easy: mixed + and − — +5</option>
           <option value="medium">Medium: × and ÷ (integer result) — +10</option>
           <option value="hard">Hard: PEMDAS (parentheses/exponents) — +50</option>
@@ -137,6 +137,11 @@ export default function EarnCoins({ initialCoins }) {
               className="border px-2 py-1 rounded w-24"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && answer !== '' && !loading && !earningDisabled) {
+                  submit()
+                }
+              }}
             />
             <button className="bg-blue-600 text-white px-3 py-1 rounded" onClick={submit} disabled={loading || answer === '' || earningDisabled}>Submit</button>
           </div>

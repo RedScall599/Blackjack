@@ -1,16 +1,25 @@
 "use client"
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useGame } from '@/hooks/use-game'
 import PlayingCard from '@/components/game/PlayingCard'
 import CoinRain from '@/components/ui/CoinRain'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 
 export default function BlackjackTable({ initialCoins }) {
+  const router = useRouter()
   const { player, dealer, dealerRevealed, playerTotal, dealerTotal, bet, setBet, result, deal, hit, stand, resetDeck } = useGame()
   const [coins, setCoins] = useState(initialCoins ?? 100)
   const [message, setMessage] = useState('')
   const [showCoins, setShowCoins] = useState(false)
   const [resetWarned, setResetWarned] = useState(false)
+
+  // Sync coins with initialCoins when it changes
+  useEffect(() => {
+    if (initialCoins !== undefined && initialCoins !== coins) {
+      setCoins(initialCoins)
+    }
+  }, [initialCoins])
   const canPlay = coins > 0 && bet > 0 && bet <= coins
   const isActive = player.length > 0 && !result
   const [modalOpen, setModalOpen] = useState(false)
@@ -42,6 +51,8 @@ export default function BlackjackTable({ initialCoins }) {
       if (res.ok) {
         setCoins(data.user.coins)
         setMessage(`Round saved: ${finalResult.toUpperCase()} | Coins: ${data.user.coins}`)
+        // Refresh server component to update header coins
+        router.refresh()
         const change = finalResult === 'win' ? bet : finalResult === 'lose' ? -bet : 0
         let title = ''
         let desc = ''
@@ -110,8 +121,8 @@ export default function BlackjackTable({ initialCoins }) {
       setMessage('Finish the current hand before dealing again.')
       return
     }
-    if (bet <= 0) {
-      setMessage('Bet must be > 0')
+    if (bet < 1) {
+      alert("You can't bet anything under 1")
       return
     }
     if (coins <= 0) {
@@ -246,12 +257,9 @@ export default function BlackjackTable({ initialCoins }) {
           type="number"
           className="border px-2 py-1 rounded w-24"
           value={bet}
-          min={1}
-          max={coins}
           onChange={(e) => {
             let v = Number(e.target.value)
-            if (!Number.isFinite(v)) v = 1
-            v = Math.max(1, Math.min(v, coins))
+            if (!Number.isFinite(v)) v = 0
             setBet(v)
           }}
         />
