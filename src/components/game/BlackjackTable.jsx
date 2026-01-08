@@ -65,15 +65,36 @@ export default function BlackjackTable({ initialCoins }) {
         setBannerTitle(title)
         setBannerDesc(desc)
         setBannerOpen(true)
-        // Auto-hide banner after a short delay
-        setTimeout(() => setBannerOpen(false), 3200)
+        // Fetch Jack of AI feedback to append guidance
+        try {
+          const dealerUpcard = dealer && dealer.length ? dealer[0] : null
+          const fbRes = await fetch('/api/ai/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              result: finalResult,
+              playerTotal,
+              dealerUpcard,
+              betAmount: bet,
+              moves: { hits: player.filter(Boolean).length - 2, stands: 1 }
+            })
+          })
+          const fbData = await fbRes.json()
+          if (fbRes.ok) {
+            const extra = fbData.feedbackText
+              ? fbData.feedbackText
+              : `${fbData.feedback?.title ? fbData.feedback.title + ' ' : ''}${fbData.feedback?.summary || ''}`
+            if (extra) {
+              setBannerDesc(`${desc} Jack of AI: ${extra}`)
+            }
+          }
+        } catch (_) {}
       } else {
         setMessage(data.error || 'Error saving game')
         setBannerVariant('error')
         setBannerTitle('Error')
         setBannerDesc(data.error || 'Error saving game result.')
         setBannerOpen(true)
-        setTimeout(() => setBannerOpen(false), 4000)
       }
     } catch (e) {
       setMessage('Network error')
@@ -81,7 +102,6 @@ export default function BlackjackTable({ initialCoins }) {
       setBannerTitle('Network Error')
       setBannerDesc('Could not save the game result. Please try again.')
       setBannerOpen(true)
-      setTimeout(() => setBannerOpen(false), 4000)
     }
   }
 
@@ -103,6 +123,8 @@ export default function BlackjackTable({ initialCoins }) {
       return
     }
     setMessage('')
+    // Close the banner when starting a new deal
+    setBannerOpen(false)
     deal()
   }
 
@@ -146,7 +168,7 @@ export default function BlackjackTable({ initialCoins }) {
       // Show banner immediately with saving text, then update after save
       setBannerVariant(result === 'win' ? 'success' : result === 'lose' ? 'error' : 'default')
       setBannerTitle(result === 'win' ? 'You Win!' : result === 'lose' ? 'You Lose' : 'Push')
-      setBannerDesc('Saving result...')
+      setBannerDesc('Saving result... Fetching feedback...')
       setBannerOpen(true)
       persistResult(result)
       setResetWarned(false)

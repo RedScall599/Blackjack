@@ -34,11 +34,12 @@
    - Email + password, sessions saved in DB, HTTP-only cookie.
    - Redirects respect `next` (e.g., `/earn` → login → back to `/earn`).
 
-### AI Integration
-- Advice endpoint: `/api/ai/advice` accepts game state and returns guidance.
+### Jack of AI Integration
+- Jack of AI Advice endpoint: `/api/ai/advice` accepts game state and returns guidance.
    - If `OPEN_API_KEY` is set, calls OpenAI Chat Completions (`model: gpt-4o-mini`).
    - If not available or request fails, uses a local basic-strategy fallback (stand/hit rationale).
 - Intended use: add a “Get Advice” button to fetch concise hit/stand rationales based on player total, dealer upcard, and bet.
+- Jack of AI Facts: `/api/ai/facts` returns a fun fact and a technical fact with novelty enforced.
 
 ## Tech Stack (CCC.1.2)
 - Frontend: Next.js App Router (React 19).
@@ -72,9 +73,27 @@
    - Deletes session; clears cookie.
 - `/api/game/play`:
    - Validates session + bet; calculates `coinsChange`; saves `Game` row and returns updated coins.
-- `/api/ai/advice`:
+- Jack of AI `/api/ai/advice`:
    - Validates session; accepts `{ playerTotal, dealerUpcard, betAmount, ... }`.
-   - Returns AI guidance or local fallback.
+   - Returns Jack of AI guidance or local fallback.
+
+### API Auth Pattern (REQUIRED)
+Use server-side session validation on every protected route:
+
+```javascript
+export async function POST(request) {
+   const sessionToken = request.cookies.get('session')?.value
+   const session = await getSession(sessionToken)
+   if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+   }
+   // proceed with validated user/session
+}
+```
+
+Notes:
+- Sessions are stored in the database (not JWT).
+- The `session` cookie is HTTP-only for security.
 
 ## Database Schema (CCC.1.2)
 - `User` (identity + balance): id, email, password, role, coins, timestamps.

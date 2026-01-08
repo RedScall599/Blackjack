@@ -395,3 +395,78 @@ Explicitly say:
 No paragraphs
 
 No skipping steps
+Artifact:
+README
+A clear README.md
+
+
+Project overview
+Problem summary
+Features (include what your AI integration is doing)
+Tech stack (Next.js, tools used)
+How to run the project
+Reflection: what worked, what didn’t, what you’d improve
+Website: 
+Page 1 - Home
+Explain what your app is and how it helps users solve the problem. 
+
+
+
+App name + short “who will benefit the most from the product” 
+Button/link to your solution (the main app feature)
+Navigation to all pages
+Website: 
+Page 2 - About
+Problem Overview prove you understand the problem (CCC.1.1)
+What the problem is (in your own words) 
+Explain how this problem shows up in real life, especially for young people like yourself
+Share why this problem is difficult to solve and what constraints exist (time, tech, skills, resources)
+Explain what happens if the problem is not solved
+Include at least one personal or realistic example that shows the problem in action
+One solution that already exists + what worked / what didn’t
+Website: 
+Page 3 - Why your product_name? 
+Show your plan and explain your solution. (CCC.1.2)
+Your solution idea (what you’re building and why)
+Features list (what your app will do)
+Challenges you expect (and how you’ll handle them)
+Your project plan summary/link (sprints/tasks)
+Website: 
+Page 4 - Features
+This is the actual working tool users interact with. (CCC.1.3)
+Your core feature(s) working
+Why would I buy your solution over others? 
+How does AI help solve my problem?
+Website: 
+Page 5 - Product 
+
+
+Core Product. This is where we can interact with your MVP or complete product. 
+
+
+A result/output (ex: saved list, schedule, summary, progress, feedback)
+A way for a user to input something OR interact (ex: tracker, form, checklist, planner)
+Website: 
+Page 6 - Rubric Evidence Page
+[RBA for LP Staff Only] Help instructors rate you easily and fairly
+
+rob@launchpadphilly.org -> lpuser1
+sanaa@launchpadphilly.org -> lpuser2
+taheera@launchpadphilly.org -> lpuser3
+
+
+
+CCC.1.1, CCC.1.2, CCC.1.3 listed clearly
+For each one: “Where to see it in my project”
+Example: “CCC.1.1 is shown on the Problem Page + in README section 2”
+Example:   CCC.1.2 is shown in the uploaded/linked wire frames 
+Links/buttons to the exact pages/sections that prove it
+Website: 
+Page 7 - Reflection Page
+[RBA for LP Staff Only] Helps you reach higher levels by showing future challenges, constraints, and smart decisions.
+Must include:
+What went well
+What didn’t go well
+What you changed during the project and why
+What you’d build next if you had more time 
+

@@ -1,4 +1,4 @@
-// AI Advice API - Blackjack guidance based on game state
+// Jack of AI — Advice API: Blackjack guidance based on game state
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/session'
 
@@ -87,7 +87,7 @@ export async function POST(request) {
       return NextResponse.json({ source: 'local', advice }, { status: 200 })
     }
 
-    // Build structured prompt for AI
+    // Build structured prompt for Jack of AI
     const system = 'You are a concise Blackjack advisor. Use standard Blackjack rules. Provide a one-sentence action (Hit/Stand) and a brief rationale referencing player total and dealer upcard. Avoid illegal moves; no splits/doubles unless explicitly asked.'
     const user = {
       role: 'user',

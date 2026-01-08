@@ -55,14 +55,37 @@
   }
 
   body {
-    background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    /* Checkered casino background */
+    background-image: 
+      repeating-conic-gradient(
+        from 0deg,
+        hsl(var(--checker-black)) 0deg 90deg,
+        hsl(var(--checker-black-alt)) 90deg 180deg
+      );
+    background-size: 40px 40px;
+    background-attachment: fixed;
+    position: relative;
   }
   
-  /* Main page background with beige tone */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    /* Overlay gradient for depth */
+    background: linear-gradient(
+      145deg, 
+      rgba(4, 120, 87, 0.15),
+      rgba(6, 95, 70, 0.2),
+      rgba(10, 10, 10, 0.3)
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  /* Main page min height */
   html, body {
-    background: linear-gradient(145deg, rgb(226, 220, 206), rgb(210, 200, 182));
     min-height: 100vh;
   }
 }
@@ -77,28 +100,29 @@
     --card-shadow: 0 0% 0%;
     
     /* Casino table colors - Rich, authentic felt green */
-    --felt-primary: 142 45% 25%;
-    --felt-dark: 142 50% 20%;
-    --felt-accent: 142 40% 30%;
-    --felt-highlight: 142 35% 35%;
+    --felt-primary: 158 79% 26%;
+    --felt-dark: 158 84% 20%;
+    --felt-accent: 158 77% 34%;
+    --felt-highlight: 160 84% 39%;
     
     /* Gold accents for premium feel */
-    --gold: 45 100% 51%;
-    --gold-dark: 45 100% 41%;
+    --gold: 45 93% 57%;
+    --gold-dark: 45 93% 47%;
     
     /* UI colors */
-    --success: 142 76% 36%;
-    --warning: 38 92% 50%;
-    --danger: 0 72% 51%;
+    --success: 160 84% 39%;
+    --warning: 45 93% 57%;
+    --danger: 0 73% 50%;
 
     /* Blackjack suit + checker theme */
-    --suit-red: 0 72% 55%;
-    --suit-black: 0 0% 8%;
-    --checker-red: 0 72% 40%;
-    --checker-black: 0 0% 16%;
-    --glow-green: 142 76% 36%;
-    --glow-red: 0 72% 51%;
-    --glow-gold: 45 100% 55%;
+    --suit-red: 0 73% 50%;
+    --suit-black: 0 0% 4%;
+    --checker-red: 0 73% 30%;
+    --checker-black: 0 0% 4%;
+    --checker-black-alt: 0 0% 10%;
+    --glow-green: 160 84% 55%;
+    --glow-red: 0 73% 60%;
+    --glow-gold: 45 93% 65%;
   }
 }
 
@@ -145,27 +169,54 @@
 
   /* Clean, modern panels */
   .card-panel {
-    background: linear-gradient(145deg, hsl(var(--felt-primary) / 0.95), hsl(var(--felt-dark) / 0.95));
-    border: 2px solid hsl(var(--gold) / 0.35);
+    background: linear-gradient(145deg, hsl(var(--felt-primary) / 0.98), hsl(var(--felt-dark) / 0.95));
+    border: 3px solid hsl(var(--gold) / 0.5);
     border-radius: 1rem;
     box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 10px 25px -3px rgba(0, 0, 0, 0.15),
-      inset 0 0 0 1px hsl(var(--gold) / 0.12),
-      0 0 18px hsl(var(--gold) / 0.10);
-    color: #000000;
+      0 4px 6px rgba(0, 0, 0, 0.3),
+      0 8px 20px rgba(0, 0, 0, 0.25),
+      0 0 30px rgba(16, 185, 129, 0.3),
+      0 0 60px rgba(16, 185, 129, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  .card-panel:hover {
+    border-color: hsl(var(--gold) / 0.7);
+    box-shadow: 
+      0 6px 10px rgba(0, 0, 0, 0.35),
+      0 12px 30px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(16, 185, 129, 0.4),
+      0 0 80px rgba(16, 185, 129, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
   }
   
   /* Neutral auth panel (non-green) for sign-in/up */
   .auth-panel {
-    background: linear-gradient(145deg, hsl(45 30% 97% / 0.98), hsl(45 25% 92% / 0.98));
-    border: 2px solid hsl(var(--gold) / 0.22);
+    background: linear-gradient(145deg, rgba(10, 10, 10, 0.98), rgba(26, 26, 26, 0.95));
+    border: 3px solid hsl(var(--gold) / 0.5);
     border-radius: 1rem;
     box-shadow:
-      0 4px 10px rgba(0, 0, 0, 0.15),
-      0 12px 28px rgba(0, 0, 0, 0.12),
-      inset 0 0 0 1px hsl(var(--gold) / 0.10);
-    color: #000000;
+      0 4px 6px rgba(0, 0, 0, 0.4),
+      0 8px 20px rgba(0, 0, 0, 0.3),
+      0 0 25px rgba(251, 191, 36, 0.25),
+      0 0 50px rgba(251, 191, 36, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  .auth-panel:hover {
+    border-color: hsl(var(--gold) / 0.7);
+    box-shadow:
+      0 6px 10px rgba(0, 0, 0, 0.45),
+      0 12px 30px rgba(0, 0, 0, 0.35),
+      0 0 35px rgba(251, 191, 36, 0.35),
+      0 0 70px rgba(251, 191, 36, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
   }
   
   /* Gold accent panel for premium areas */
@@ -200,17 +251,20 @@
     background: white;
     border-radius: calc(var(--card-width) * 0.08);
     box-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.1),
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      0 0 0 1px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+      0 2px 4px rgba(0, 0, 0, 0.15),
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(0, 0, 0, 0.08),
+      0 0 15px rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
   }
   
   .playing-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px) scale(1.02);
     box-shadow: 
-      0 4px 8px rgba(0, 0, 0, 0.15),
-      0 8px 20px rgba(0, 0, 0, 0.2);
+      0 6px 12px rgba(0, 0, 0, 0.2),
+      0 10px 30px rgba(0, 0, 0, 0.25),
+      0 0 25px rgba(251, 191, 36, 0.4),
+      0 0 50px rgba(251, 191, 36, 0.2);
   }
   
   .playing-card-sm {
@@ -246,34 +300,47 @@
     width: clamp(40px, 8vw, 60px);
     height: clamp(40px, 8vw, 60px);
     border-radius: 50%;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid hsl(var(--gold) / 0.6);
     box-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.2),
-      0 4px 8px rgba(0, 0, 0, 0.15),
-      inset 0 2px 4px rgba(255, 255, 255, 0.2);
-    transition: transform 0.2s ease;
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 4px 8px rgba(0, 0, 0, 0.2),
+      0 0 10px rgba(251, 191, 36, 0.3),
+      inset 0 2px 4px rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
   }
   
   .chip:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
+    border-color: hsl(var(--gold));
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.35),
+      0 6px 16px rgba(0, 0, 0, 0.25),
+      0 0 20px rgba(251, 191, 36, 0.5),
+      0 0 40px rgba(251, 191, 36, 0.3),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
   }
   
   .chip:active {
-    transform: scale(0.95);
+    transform: scale(1.05);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      0 0 12px rgba(251, 191, 36, 0.4);
   }
 
   /* Button styles */
   .nav-btn {
-    background: hsl(var(--suit-red));
+    background: linear-gradient(145deg, hsl(var(--suit-red)), hsl(0 73% 42%));
     color: #fff;
     font-weight: 700;
     padding: 0.45rem 0.9rem;
     border-radius: 0.5rem;
-    border: 1px solid hsl(var(--suit-red) / 0.6);
+    border: 2px solid hsl(var(--suit-red) / 0.7);
     box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.25),
-      0 0 8px hsl(var(--glow-red) / 0.45);
-    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 15px rgba(220, 38, 38, 0.4),
+      0 0 30px rgba(220, 38, 38, 0.2);
+    transition: all 0.3s ease;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -281,19 +348,21 @@
   }
 
   .nav-btn:hover {
-    transform: translateY(-1px);
+    background: linear-gradient(145deg, hsl(0 73% 55%), hsl(var(--suit-red)));
+    transform: translateY(-2px);
     box-shadow:
-      0 4px 10px rgba(0, 0, 0, 0.3),
-      0 0 12px hsl(var(--glow-red) / 0.6),
-      0 0 22px hsl(var(--glow-red) / 0.4);
-    filter: saturate(1.1);
+      0 4px 8px rgba(0, 0, 0, 0.35),
+      0 8px 20px rgba(0, 0, 0, 0.25),
+      0 0 25px rgba(220, 38, 38, 0.6),
+      0 0 50px rgba(220, 38, 38, 0.35);
+    border-color: hsl(var(--suit-red));
   }
 
   .nav-btn:active {
     transform: translateY(0);
     box-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.35),
-      0 0 8px hsl(var(--glow-red) / 0.5);
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      0 0 12px rgba(220, 38, 38, 0.5);
   }
   .btn-primary {
     background: linear-gradient(145deg, hsl(var(--gold)), hsl(var(--gold-dark)));
@@ -301,28 +370,36 @@
     font-weight: 700;
     padding: 0.75rem 2rem;
     border-radius: 0.75rem;
-    border: none;
+    border: 2px solid hsl(var(--gold-dark));
     box-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.2),
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      inset 0 1px 2px rgba(255, 255, 255, 0.3);
-    transition: all 0.2s ease;
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 15px rgba(251, 191, 36, 0.4),
+      0 0 30px rgba(251, 191, 36, 0.2),
+      inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-size: 0.875rem;
   }
   
   .btn-primary:hover {
-    transform: translateY(-2px);
+    background: linear-gradient(145deg, hsl(45 93% 65%), hsl(var(--gold)));
+    transform: translateY(-3px);
     box-shadow: 
-      0 4px 8px rgba(0, 0, 0, 0.25),
-      0 8px 20px rgba(0, 0, 0, 0.2),
-      0 0 10px hsl(var(--gold) / 0.55),
-      0 0 24px hsl(var(--gold) / 0.35);
+      0 4px 8px rgba(0, 0, 0, 0.35),
+      0 8px 20px rgba(0, 0, 0, 0.25),
+      0 0 25px rgba(251, 191, 36, 0.6),
+      0 0 50px rgba(251, 191, 36, 0.4),
+      inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    border-color: hsl(var(--gold));
   }
   
   .btn-primary:active {
-    transform: translateY(0);
+    transform: translateY(-1px);
+    box-shadow: 
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      0 0 15px rgba(251, 191, 36, 0.5);
   }
   
   .btn-secondary {
@@ -331,9 +408,12 @@
     font-weight: 600;
     padding: 0.75rem 2rem;
     border-radius: 0.75rem;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.25),
+      0 0 10px rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-size: 0.875rem;
@@ -341,11 +421,19 @@
   
   .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px);
     box-shadow:
-      0 0 10px rgba(255, 255, 255, 0.35),
-      0 0 24px rgba(255, 255, 255, 0.25);
+      0 4px 8px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.45),
+      0 0 40px rgba(255, 255, 255, 0.3);
+  }
+  
+  .btn-secondary:active {
+    transform: translateY(-1px);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.35),
+      0 0 12px rgba(255, 255, 255, 0.35);
   }
 
   /* Score display */
@@ -450,12 +538,12 @@
 @layer components {
   .casino-checkers {
     background:
-      conic-gradient(from 45deg,
-        hsl(var(--checker-red)) 0 90deg,
-        hsl(var(--checker-black)) 0 180deg,
-        hsl(var(--checker-red)) 0 270deg,
-        hsl(var(--checker-black)) 0 360deg);
-    background-size: 24px 24px;
+      repeating-conic-gradient(
+        from 0deg,
+        hsl(var(--checker-black)) 0deg 90deg,
+        hsl(var(--checker-black-alt)) 90deg 180deg
+      );
+    background-size: 30px 30px;
   }
 
   .casino-checkers-soft {
@@ -467,37 +555,65 @@
     position: absolute;
     inset: 0;
     background:
-      conic-gradient(from 45deg,
-        hsl(var(--checker-red)) 0 90deg,
-        hsl(var(--checker-black)) 0 180deg,
-        hsl(var(--checker-red)) 0 270deg,
-        hsl(var(--checker-black)) 0 360deg);
-    background-size: 20px 20px;
-    opacity: 0.15;
+      repeating-conic-gradient(
+        from 0deg,
+        hsl(var(--checker-black)) 0deg 90deg,
+        hsl(var(--checker-black-alt)) 90deg 180deg
+      );
+    background-size: 25px 25px;
+    opacity: 0.2;
     pointer-events: none;
   }
 
   /* Suit color utilities */
-  .suit-red { color: hsl(var(--suit-red)); }
-  .suit-black { color: hsl(var(--suit-black)); }
+  .suit-red { 
+    color: hsl(var(--suit-red)); 
+    text-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
+  }
+  .suit-black { 
+    color: hsl(var(--suit-black)); 
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
 
   /* Generic glow utilities */
-  .glow-green { box-shadow: 0 0 8px hsl(var(--glow-green) / 0.6), 0 0 20px hsl(var(--glow-green) / 0.3); }
-  .glow-red { box-shadow: 0 0 8px hsl(var(--glow-red) / 0.6), 0 0 20px hsl(var(--glow-red) / 0.3); }
-  .glow-gold { box-shadow: 0 0 8px hsl(var(--gold) / 0.6), 0 0 20px hsl(var(--gold) / 0.3); }
+  .glow-green { 
+    box-shadow: 
+      0 0 15px rgba(16, 185, 129, 0.5), 
+      0 0 30px rgba(16, 185, 129, 0.3),
+      0 0 45px rgba(16, 185, 129, 0.2);
+  }
+  .glow-red { 
+    box-shadow: 
+      0 0 15px rgba(220, 38, 38, 0.5), 
+      0 0 30px rgba(220, 38, 38, 0.3),
+      0 0 45px rgba(220, 38, 38, 0.2);
+  }
+  .glow-gold { 
+    box-shadow: 
+      0 0 15px rgba(251, 191, 36, 0.5), 
+      0 0 30px rgba(251, 191, 36, 0.3),
+      0 0 45px rgba(251, 191, 36, 0.2);
+  }
 
   /* Button hover glow for default <button> elements inside panels */
   .card-panel button,
   .auth-panel button {
-    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    transition: all 0.3s ease;
   }
   .card-panel button:hover,
   .auth-panel button:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.2),
-      0 0 10px rgba(255, 255, 255, 0.45),
-      0 0 22px rgba(255, 255, 255, 0.3);
+      0 4px 8px rgba(0, 0, 0, 0.25),
+      0 0 15px rgba(255, 255, 255, 0.5),
+      0 0 30px rgba(255, 255, 255, 0.35);
+  }
+  .card-panel button:active,
+  .auth-panel button:active {
+    transform: translateY(0);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 0 10px rgba(255, 255, 255, 0.4);
   }
 }
 
@@ -524,13 +640,23 @@
   .card-hand {
     /* Blackjack-friendly ivory with subtle gold tint */
     background: linear-gradient(145deg, hsl(45 30% 96% / 0.98), hsl(45 40% 92% / 0.95));
-    border: 2px solid hsl(var(--gold) / 0.25);
+    border: 2px solid hsl(var(--gold) / 0.35);
     gap: clamp(0.5rem, 1.5vw, 1rem);
     justify-content: center;
     align-items: center;
     box-shadow:
-      inset 0 0 0 1px hsl(var(--gold) / 0.12),
-      0 0 18px hsl(var(--gold) / 0.10);
+      inset 0 0 0 1px hsl(var(--gold) / 0.15),
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      0 0 20px rgba(251, 191, 36, 0.15);
+    transition: all 0.3s ease;
+  }
+  
+  .card-hand:hover {
+    border-color: hsl(var(--gold) / 0.5);
+    box-shadow:
+      inset 0 0 0 1px hsl(var(--gold) / 0.2),
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 0 30px rgba(251, 191, 36, 0.25);
   }
 
 }
@@ -637,5 +763,118 @@
   
   .playing-card {
     --card-width: min(110px, 8vw);
+  }
+}
+
+/* Floating Bubbles Background Animation */
+@layer components {
+  .bubble {
+    position: absolute;
+    bottom: -150px;
+    background: radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.15), rgba(16, 185, 129, 0.1));
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: float-up linear infinite;
+    box-shadow: 
+      inset 0 0 20px rgba(255, 255, 255, 0.1),
+      0 0 30px rgba(16, 185, 129, 0.1);
+  }
+  
+  .bubble-1 {
+    width: 80px;
+    height: 80px;
+    left: 10%;
+    animation-duration: 25s;
+    animation-delay: 0s;
+  }
+  
+  .bubble-2 {
+    width: 120px;
+    height: 120px;
+    left: 30%;
+    animation-duration: 30s;
+    animation-delay: 3s;
+  }
+  
+  .bubble-3 {
+    width: 60px;
+    height: 60px;
+    left: 50%;
+    animation-duration: 22s;
+    animation-delay: 6s;
+  }
+  
+  .bubble-4 {
+    width: 100px;
+    height: 100px;
+    left: 70%;
+    animation-duration: 28s;
+    animation-delay: 2s;
+  }
+  
+  .bubble-5 {
+    width: 90px;
+    height: 90px;
+    left: 85%;
+    animation-duration: 26s;
+    animation-delay: 5s;
+  }
+  
+  .bubble-6 {
+    width: 70px;
+    height: 70px;
+    left: 15%;
+    animation-duration: 24s;
+    animation-delay: 8s;
+  }
+  
+  @keyframes float-up {
+    0% {
+      bottom: -150px;
+      transform: translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.4;
+    }
+    90% {
+      opacity: 0.4;
+    }
+    100% {
+      bottom: 110vh;
+      transform: translateX(100px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+}
+
+/* Tailwind utility classes for gold color */
+@layer utilities {
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+  
+  .text-gold-light {
+    color: hsl(var(--gold-light));
+  }
+  
+  .border-gold {
+    border-color: hsl(var(--gold));
+  }
+  
+  .bg-gold\/20 {
+    background-color: hsl(var(--gold) / 0.2);
+  }
+  
+  .bg-gold\/30 {
+    background-color: hsl(var(--gold) / 0.3);
+  }
+  
+  .border-gold\/30 {
+    border-color: hsl(var(--gold) / 0.3);
+  }
+  
+  .border-gold\/40 {
+    border-color: hsl(var(--gold) / 0.4);
   }
 }
