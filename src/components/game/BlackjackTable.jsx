@@ -226,7 +226,7 @@ export default function BlackjackTable({ initialCoins }) {
       {/* Spacer for content to not jump under banner */}
       <div className="pt-16" />
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="inline-flex items-center gap-1">
+        <span className="inline-flex items-center gap-1 text-white">
           {/* Coin icon */}
           <svg aria-hidden="true" focusable="false" className="w-4 h-4" viewBox="0 0 24 24">
             <defs>
@@ -240,8 +240,8 @@ export default function BlackjackTable({ initialCoins }) {
           </svg>
           Coins:
         </span>
-        <strong>{coins}</strong>
-        <span>Bet:</span>
+        <strong className="text-white">{coins}</strong>
+        <span className="text-white">Bet:</span>
         <input
           type="number"
           className="border px-2 py-1 rounded w-24"
@@ -264,7 +264,7 @@ export default function BlackjackTable({ initialCoins }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h3 className="text-xl font-semibold">Player Hand</h3>
+            <h3 className="text-xl font-semibold text-white">Player Hand</h3>
             <span className="inline-flex items-center rounded-full bg-emerald-700 text-white px-3 py-1 text-sm font-bold shadow">
               Total: {playerTotal}
             </span>
@@ -277,7 +277,7 @@ export default function BlackjackTable({ initialCoins }) {
         </div>
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h3 className="text-xl font-semibold">Dealer Hand</h3>
+            <h3 className="text-xl font-semibold text-white">Dealer Hand</h3>
             {dealerRevealed ? (
               <span className="inline-flex items-center rounded-full bg-slate-800 text-white px-3 py-1 text-sm font-bold shadow">
                 Total: {dealerTotal}
