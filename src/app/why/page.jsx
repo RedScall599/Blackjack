@@ -2,84 +2,137 @@ import Link from 'next/link'
 
 export default function WhyPage() {
   return (
-    <div className="max-w-3xl mx-auto p-8 space-y-6">
-      <h2 className="text-xl font-semibold">Why Blackjack Royale — CCC.1.2</h2>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div className="text-center mb-10">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white drop-shadow-lg mb-3">
+          Why <span className="text-gold">Blackjack Royale</span>?
+        </h1>
+        <p className="text-lg text-white/80">Solution Architecture (CCC.1.2)</p>
+      </div>
 
-      <div>
-        <p className="font-semibold">Why I chose Blackjack</p>
-        <div className="space-y-1">
-          <p>I enjoy the game: personal interest keeps the project engaging.</p>
-          <p>Helps users think: builds probability intuition and pattern recognition.</p>
-          <p>Decision-making practice: hit/stand choices with immediate feedback.</p>
-          <p>Simple rules, real risk: busts and losses reduce coins to show consequences.</p>
-          <p>Rewards success: wins increase coins to reinforce good decisions.</p>
-          <p>Work-to-earn: math challenges on Earn give the feeling of earning coins.</p>
-          <p>Learning focus: teaches risk management and expected value in a friendly format.</p>
-          <p>This supports CCC.1.2: clear rationale for solution choice and user impact.</p>
+      <div className="card-panel mb-6 space-y-4">
+        <h2 className="text-2xl font-bold text-gold border-b border-gold/30 pb-2 flex items-center gap-2">
+          <span>&#9827;</span> Why I Chose Blackjack
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div className="bg-black/30 p-4 rounded border border-white/10 space-y-2">
+            <p className="text-gold font-semibold">Personal Engagement</p>
+            <p className="text-white/80">I enjoy the game: personal interest keeps the project engaging.</p>
+            <p className="text-white/80">Simple rules, real risk: busts and losses reduce coins to show consequences.</p>
+          </div>
+          <div className="bg-black/30 p-4 rounded border border-white/10 space-y-2">
+            <p className="text-gold font-semibold">Learning Value</p>
+            <p className="text-white/80">Builds probability intuition and pattern recognition.</p>
+            <p className="text-white/80">Decision-making practice: hit/stand choices with immediate feedback.</p>
+          </div>
+          <div className="bg-black/30 p-4 rounded border border-white/10 space-y-2">
+            <p className="text-gold font-semibold">Real Consequences</p>
+            <p className="text-white/80">Rewards success: wins increase coins to reinforce good decisions.</p>
+            <p className="text-white/80">Work-to-earn: math challenges on Earn give the feeling of earning coins.</p>
+          </div>
+          <div className="bg-black/30 p-4 rounded border border-white/10 space-y-2">
+            <p className="text-gold font-semibold">Educational Focus</p>
+            <p className="text-white/80">Teaching risk management and expected value in a friendly format.</p>
+            <p className="text-white/80">Helps users think through probability and dealer logic.</p>
+          </div>
         </div>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Link className="nav-btn" href="/product">Play Blackjack</Link>
-          <Link className="nav-btn" href="/earn">Earn Coins</Link>
-          <Link className="nav-btn" href="/features">See Features</Link>
+        <div className="mt-4 flex flex-wrap gap-3 justify-center">
+          <Link className="btn-primary" href="/product">Play Blackjack</Link>
+          <Link className="btn-secondary" href="/earn">Earn Coins</Link>
+          <Link className="btn-secondary" href="/features">See Features</Link>
         </div>
       </div>
 
-      <div>
-        <p className="font-semibold">My solution idea </p>
-        <div className="space-y-1">
-          <p>Build a real Blackjack game with persistent coins and round history.</p>
-          <p>Teach probability, dealer logic, and decision-making through authentic rules.</p>
-          <p>Use Next.js + Prisma + Neon (PostgreSQL) with session-based auth for reliability.</p>
-          <p>Make progress matter: coins and results survive refreshes and logins.</p>
-          <p>Why database is needed: persist user identity, coins, and game results.</p>
-          <p>Why authentication is needed: sessions validate requests and protect coin changes.</p>
-          <p>This supports CCC.1.2: planned solution and constraints.</p>
-          <p>This is visible on Page Why, Features, Product.</p>
+      <div className="card-panel mb-6 space-y-4">
+        <h2 className="text-2xl font-bold text-gold border-b border-gold/30 pb-2 flex items-center gap-2">
+          <span>&#9829;</span> My Solution Architecture
+        </h2>
+        <div className="space-y-3">
+          <p className="text-white/90 text-lg">Build a real Blackjack game with persistent coins and round history.</p>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded">
+              <p className="text-emerald-300 font-semibold mb-2">&#9824; Tech Stack</p>
+              <p className="text-white/80 text-sm">Next.js + Prisma + Neon (PostgreSQL) with session-based auth for reliability.</p>
+            </div>
+            <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded">
+              <p className="text-blue-300 font-semibold mb-2">&#9830; Persistence</p>
+              <p className="text-white/80 text-sm">Make progress matter: coins and results survive refreshes and logins.</p>
+            </div>
+            <div className="bg-purple-900/20 border border-purple-500/30 p-4 rounded">
+              <p className="text-purple-300 font-semibold mb-2">&#9829; Education</p>
+              <p className="text-white/80 text-sm">Teach probability, dealer logic, and decision-making through authentic rules.</p>
+            </div>
+          </div>
         </div>
       </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="card-panel space-y-3">
+          <h2 className="text-xl font-bold text-gold border-b border-gold/30 pb-2">Why Database?</h2>
+          <div className="space-y-2">
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">Persist user identity, coins, and game results</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">Progress survives refreshes and logins</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">Game history tracked per user</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">Enables accountability and learning from past games</p>
+            </div>
+          </div>
+        </div>
 
-      <div>
-        <p className="font-semibold">Challenges I expect </p>
-        <div className="space-y-1">
-          <p>Fairness and rules: implement a pure game engine; dealer hits-to-17; Ace handling; push logic.</p>
-          <p>State sync and persistence: validate on the server; save after each round; return updated coins.</p>
-          <p>Secure auth: HTTP-only cookies; server session table; password hashing; route guards.</p>
-          <p>Data integrity: Prisma schema with constraints; transactional updates for coins + game row.</p>
-          <p>Edge cases: busts, natural blackjack, deck exhaustion; reset and reshuffle mechanisms.</p>
-          <p>UX polish: clear CTA, rules sidebar, responsive layout, accessible controls.</p>
-          <p>This supports CCC.1.2: identifies risks and needed resources.</p>
+        <div className="card-panel space-y-3">
+          <h2 className="text-xl font-bold text-gold border-b border-gold/30 pb-2">Why Authentication?</h2>
+          <div className="space-y-2">
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">Sessions validate requests and protect coin changes</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">HTTP-only cookies prevent client-side tampering</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">Identifies players securely across sessions</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-gold mt-1">&#8226;</span>
+              <p className="text-white/80">Prevents fake balances and unauthorized access</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div>
-        <p className="font-semibold">Your project plan summary/link (sprints/tasks)</p>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>Sprint 1: Auth + DB — user/session tables; login/register APIs; cookie sessions.</li>
-          <li>Sprint 2: Game Engine + UI — deck, hand totals, dealer loop; product page UI.</li>
-          <li>Sprint 3: Persistence + Coins — /api/game/play writes results; coin updates returned to client.</li>
-          <li>Sprint 4: Learning + Polish — Why/Features pages; Earn Coins; banners; animations.</li>
-          <li>
-            Evidence:
-            <span className="inline-flex gap-2 ml-2 flex-wrap">
-              <Link className="nav-btn" href="/features">Features</Link>
-              <Link className="nav-btn" href="/product">Product</Link>
-            </span>
-            <span className="ml-2 text-sm">(CCC.1.2)</span>
-          </li>
-          <li>
-            CCC.1.1:
-            <span className="inline-flex gap-2 ml-2 flex-wrap">
-              <Link className="nav-btn" href="/about">About</Link>
-            </span>
-          </li>
-          <li>
-            CCC.1.3:
-            <span className="inline-flex gap-2 ml-2 flex-wrap">
-              <Link className="nav-btn" href="/product">Product</Link>
-            </span>
-          </li>
-        </ul>
+      <div className="card-panel space-y-3">
+        <h2 className="text-xl font-bold text-gold border-b border-gold/30 pb-2">Challenges & Constraints</h2>
+        <div className="grid sm:grid-cols-3 gap-3">
+          <div className="bg-red-900/20 border border-red-500/30 p-3 rounded">
+            <p className="text-red-300 font-semibold text-sm mb-1">State Management</p>
+            <p className="text-white/70 text-xs">Managing dealer vs player hands, bet flow, and UI updates</p>
+          </div>
+          <div className="bg-yellow-900/20 border border-yellow-500/30 p-3 rounded">
+            <p className="text-yellow-300 font-semibold text-sm mb-1">Security</p>
+            <p className="text-white/70 text-xs">Validating bets server-side, preventing coin manipulation</p>
+          </div>
+          <div className="bg-blue-900/20 border border-blue-500/30 p-3 rounded">
+            <p className="text-blue-300 font-semibold text-sm mb-1">UX Polish</p>
+            <p className="text-white/70 text-xs">Card animations, win effects, responsive design</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="card-panel text-center space-y-3">
+        <p className="text-white/70">This supports CCC.1.2: planned solution and constraints.</p>
+        <p className="text-white/60 text-sm">Visible on Why, Features, and Product pages.</p>
       </div>
     </div>
   )
